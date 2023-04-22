@@ -28,3 +28,4 @@ NYC Crime Data Instructions:
     4. geo_export_0055599d-8f10-45b4-afb9-9ce5823b628d.shp
     5. geo_export_0055599d-8f10-45b4-afb9-9ce5823b628d.shx
 11. Run crimeAnalysis.py to see a heat map of crime throughout various neighborhoods in NYC
+12. Run crimeByNeighborhood.py to see a line graph of crime over time for all neighborhoods
