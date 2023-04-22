@@ -2,7 +2,7 @@
 
 NYC Crime Data Instructions:
 1. Go to the following link and download NYPD Complaint Data Current (Year To Date) as a CSV: https://data.cityofnewyork.us/Public-Safety/NYPD-Complaint-Data-Current-Year-To-Date-/5uac-w243
-2. Rename the file “NYPD.csv”, upload it onto dataproc and place it into HDFS: `hdfs dos -put NYPD.csv`
+2. Rename the file “NYPD.csv”, upload it onto dataproc and place it into HDFS: `hdfs dfs -put NYPD.csv`
 3. In HDFS, create a directory called: hillary_data, and move the csv into that directory
 4. Similarly, upload all of the following files into dataproc and place them into HDFS:
     1. nyc_crime_ingest.scala
