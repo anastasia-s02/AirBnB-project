@@ -3,7 +3,7 @@ import geopandas as gpd
 import matplotlib.pyplot as plt
 
 # Load crime data
-df = pd.read_csv('crime.csv')
+df = pd.read_csv('nyc_crime_clean.csv')
 
 # Create GeoDataFrame from latitude and longitude
 gdf = gpd.GeoDataFrame(df, geometry=gpd.points_from_xy(df.Longitude, df.Latitude))
