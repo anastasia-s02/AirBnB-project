@@ -1,7 +1,35 @@
+/*
+To run please follow the following instructions
+* 1. Begins the spark shell: `spark-shell --deploy-mode client`
+# 2. load the scala file: `:load nycCrime.scala`
+* 3. Run the defined object: NYPDDataAnalysis.main(Array())
+*/
 import org.apache.spark.sql.{DataFrame, SparkSession}
 import org.apache.spark.sql.functions._
 import org.apache.spark.sql.functions.{mean, expr}
 
+// CLEANING
+/**
+ * The attatched link includes the source of the following dataset: 
+ * https://data.cityofnewyork.us/Public-Safety/NYC-crime/qb7u-rbmr
+ * 
+ * Additionally, the dataset can be found on hcd258 hdfs in 'hillary_data/NYPD.csv'
+ * 
+ * Processed & clean dataset can be found on hcd258 hdfs in 'hillary_data/output/nyc_crime_clean.csv'
+ * 
+ * Columns present after cleaning: 
+ * BORO_NM - Name of Borough where crime incident occured
+ * CMPLNT_FR_DT - Reoved all rows with dates prior to 01/01/2017
+ * LAW_CAT_CD - Level of offense: felony, misdemeanor, violation 
+ * Latitude - Midblock Latitude coordinate for Global Coordinate System, WGS 1984, decimal degrees (EPSG 4326) -
+ *                                                                       to be used when determining crime location
+ * Longitude - Midblock Longitude coordinate for Global Coordinate System, WGS 1984, decimal degrees (EPSG 4326) - 
+ *                                                                       to be used when determining crime location
+ * Police_Precint - Boundaries of Police Precincts
+ * binary_col - 0 represents if the crime was a Misdemeanor or Violation based on reading from
+ * LAW_CAT_CD
+ * Neighborhood - provides list of neighborhoods that the crime occured based on Police_Precints
+ */
 
 object NYPDDataAnalysis {
   def main(args: Array[String]): Unit = {
@@ -13,24 +41,20 @@ object NYPDDataAnalysis {
     var data: DataFrame = spark.read
       .option("header", "true")
       .option("inferSchema", "true")
-      .csv("NYPD.csv")
+      .csv("hillary_data/NYPD.csv")
       .drop("CMPLNT_FR_TM", "HADEVELOP", "HOUSING_PSA", "PARKS_NM", 
       "PATROL_BORO", "STATION_NAME", "TRANSIT_DISTRICT", "SUSP_AGE_GROUP", 
-      "Latitude", "Longitude", "New Georeferenced Column", "Community Districts", 
+      "New Georeferenced Column", "Community Districts", "CMPLNT_TO_DT", "KY_CD",
       "City Council Districts", "CMPLNT_NUM", "ADDR_PCT_CD", "CMPLNT_TO_TM", 
-      "HADEVELOPT", "JURIS_DESC", "RPT_DT", "X_COORD_CD", "Y_COORD_CD", "Borough Boundaries")
+      "HADEVELOPT", "JURIS_DESC", "RPT_DT", "X_COORD_CD", "Y_COORD_CD", "Borough Boundaries",
+      "JURISDICTION_CODE", "LOC_OF_OCCUR_DESC", "OFNS_DESC", "PD_CD", "PD_DESC", "PREM_TYP_DESC",
+      "SUSP_RACE", "SUSP_SEX", "VIC_AGE_GROUP", "VIC_RACE", "VIC_SEX", "Lat_Lon", "CRM_ATPT_CPTD_CD")
       .na.drop()
         // Filter rows with CMPLNT_TO_DT after or equal to 01/01/2017
     data = data.filter(to_date(col("CMPLNT_FR_DT"), "MM/dd/yyyy") >= to_date(lit("01/01/2017"), "MM/dd/yyyy"))
     // Rename columns with spaces to have an underscore (TEXT FORMATING - CODE CLEANING PT 1)
     data = data.toDF(data.columns.map(_.replaceAll(" ", "_")): _*)
-    // Find distinct values in each column and the count of text data
-    data.columns.foreach(column => {
-        val distinctValues = data.select(column).distinct()
-        val countDistinctValues = distinctValues.count()
-        println(s"Distinct values in column $column: $countDistinctValues")
-        distinctValues.show(false)
-    })
+
 
     // Create a binary column based on the condition of another column.
 
