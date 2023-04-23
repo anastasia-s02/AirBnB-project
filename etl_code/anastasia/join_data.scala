@@ -46,7 +46,7 @@ println(dfComplete.show(10))
 /**
  * Save the joined dataframe to hdfs. 
  */
-dfComplete.coalesce(1).write.format("csv").option("header", "true").mode("overwrite").save("hdfs://nyu-dataproc-m/user/as15026_nyu_edu/project/join_output")
+//dfComplete.coalesce(1).write.format("csv").option("header", "true").mode("overwrite").save("hdfs://nyu-dataproc-m/user/as15026_nyu_edu/project/join_output")
 
 
 
