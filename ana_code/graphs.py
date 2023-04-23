@@ -14,6 +14,7 @@ plt.xlabel("Price")
 plt.ylabel("Mean total of crimes")
 plt.title("Price vs Crimes")
 plt.savefig("price_vs_crimes.png")
+plt.clf()
 
 
 # Create a graph for Rating vs Number of Crimes
@@ -24,6 +25,7 @@ plt.xlabel("Rating")
 plt.ylabel("Mean total of crimes")
 plt.title("Rating vs Crimes")
 plt.savefig("rating_vs_crimes.png")
+plt.clf()
 
 
 # Create a table for Rating vs superhost 
@@ -36,6 +38,7 @@ ax.axis('off')
 ax.axis('tight')
 table_plot = ax.table(cellText=df3.values, colLabels=df3.columns, loc='center')
 plt.savefig("rating_vs_superhost.png")
+plt.clf()
 
 
 # Create a graph for Rating vs Number of reviews 
@@ -45,6 +48,7 @@ plt.xlabel("Rating")
 plt.ylabel("Mean numer of reviews")
 plt.title("Rating vs Number of reviews")
 plt.savefig("rating_vs_reviews.png")
+plt.clf()
 
 
 # Create a graph for Rating vs Price 
@@ -55,6 +59,7 @@ plt.xlabel("Rating")
 plt.ylabel("Mean price range")
 plt.title("Rating vs Mean price")
 plt.savefig("rating_vs_price.png")
+plt.clf()
 
 
 # Create a heatmap for correlations 
@@ -69,7 +74,7 @@ for i in range(len(df5)):
         plt.text(j, i, df5.iloc[i, j], ha='center', va='center')
 
 plt.colorbar()
-#plt.tight_layout()
+plt.tight_layout()
 plt.savefig('heatmap_correlations.png')
 
 print("All graphs and tables have been successfully created and saved!")
