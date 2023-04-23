@@ -69,6 +69,7 @@ for i in range(len(df5)):
         plt.text(j, i, df5.iloc[i, j], ha='center', va='center')
 
 plt.colorbar()
-plt.tight_layout()
+#plt.tight_layout()
 plt.savefig('heatmap_correlations.png')
 
+print("All graphs and tables have been successfully created and saved!")
