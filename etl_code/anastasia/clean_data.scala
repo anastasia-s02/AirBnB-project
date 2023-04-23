@@ -92,7 +92,7 @@ val extraColumnsDF2 = extraColumnsDF.withColumn("neighbourhood_match", when(col(
  */
 val finalDF = extraColumnsDF2.drop("host_neighbourhood", "neighbourhood_cleansed", 
 	"host_verifications", "verif_lower", "host_is_superhost", "host_identity_verified", "host_neighbourhood_lower")
-    .na.drop(Seq("rating_range"))
+    .na.drop(Seq("rating_range")).na.drop(Seq("price_range"))
 
 
 /**
@@ -102,6 +102,6 @@ println(finalDF.show(20))
 println("Number of rows in the processed dataset: " + finalDF.count())
 
 /**
- * Save the dataframe. 
+ * Save the dataframe.
  */
-finalDF.coalesce(1).write.format("csv").option("header", "true").mode("overwrite").save("hdfs://nyu-dataproc-m/user/as15026_nyu_edu/project/output")
+//finalDF.coalesce(1).write.format("csv").option("header", "true").mode("overwrite").save("hdfs://nyu-dataproc-m/user/as15026_nyu_edu/project/output")
