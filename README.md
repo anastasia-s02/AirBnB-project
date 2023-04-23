@@ -16,8 +16,10 @@ NYC Crime Data Instructions:
     1.  `:load nycCrime.scala`
     2.  `NYPDDataAnalysis.main(Array())`
 8. Finally - run crime_profiling.scala as follows:
-    1.  `:load crime_profiling.scala`
-    2.  ` NYPDComplaintsCount.main(Array())`
+    1.  Get the name of the output file `hdfs dfs -ls hillary_data/output`, and change the name as such:
+    `hadoop fs -mv hdfs://nyu-dataproc-m/user/<username>/hillary_data/output/<file name>.csv hdfs://nyu-dataproc-m/user/<username>/hillary_data/output/nyc_crime_clean.csv`
+    2.  `:load crime_profiling.scala`
+    3.  ` NYPDComplaintsCount.main(Array())`
 9. Next, download the csv output into hillary_data/output:
     1. `hdfs dis -get hillary_data/output/<name of csv>`
     2. Select “download file” and enter the exact path of the csv
